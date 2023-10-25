@@ -1,5 +1,10 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
+import { compare } from 'bcrypt'
+import { User } from '@prisma/client'
+
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
 
 export const authOptions: NextAuthOptions = {
     session: {
@@ -19,37 +24,71 @@ export const authOptions: NextAuthOptions = {
                     type: 'text',
                     placeholder: 'Username',
                 },
-                email: {
-                    label: 'Email',
-                    type: 'text',
-                    placeholder: 'Email',
-                },
                 password: {
                     label: 'Password',
                     type: 'password',
                 },
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 // Add logic here to look up the user from the credentials supplied
-                const user = {
-                    id: '1',
-                    name: 'test',
-                    email: 'test@test.com',
-                    password: '123',
+                if (!credentials?.username || !credentials.password) {
+                    return null
                 }
 
-                if (user) {
-                    // Any object returned will be saved in `user` property of the JWT
-                    return user
-                } else {
-                    // If you return null then an error will be displayed advising the user to check their details.
-                    return null
+                const user = await prisma.user.findUnique({
+                    where: {
+                        username: credentials.username,
+                    },
+                })
 
-                    // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+                if (!user) {
+                    return null
+                }
+
+                const isValidPassword = await compare(
+                    credentials.password,
+                    user.password
+                )
+
+                if (!isValidPassword) {
+                    return null
+                }
+
+                return {
+                    id: user.id + ' ',
+                    username: user.username,
+                    email: user.email,
+                    randomKey: 'Hey cool',
                 }
             },
         }),
     ],
+
+    callbacks: {
+        session: ({ session, token }) => {
+            console.log('Session callback', { session, token })
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                    randomKey: token.randomKey,
+                },
+            }
+        },
+        jwt: ({ token, user }) => {
+            console.log('JWT callback', { token, user })
+            if (user) {
+                const u = user as unknown as any
+                return {
+                    ...token,
+                    id: u.id,
+                    randomKey: u.randomKey,
+                }
+            }
+            return token
+        },
+    },
 }
 
 const handler = NextAuth(authOptions)
