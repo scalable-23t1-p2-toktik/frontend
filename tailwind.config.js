@@ -12,13 +12,16 @@ module.exports = {
 	],
   theme: {
     container: {
-      center: true,
+      center: false,
       padding: "2rem",
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      fontSize: {
+        '9xl': '9em', // Define a custom text size
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
