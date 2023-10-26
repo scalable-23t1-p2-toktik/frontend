@@ -11,8 +11,7 @@ datasource db {
 }
 
 model User {
-<<<<<<< HEAD
-  id        String    @id @default(cuid())
+  id        Int       @id @default(autoincrement())
   username  String    @unique
   email     String    @unique
   password  String
@@ -20,12 +19,5 @@ model User {
   updatedAt DateTime  @updatedAt
 
   @@index([createdAt])
-=======
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
-  role      Role     @default(USER)
-  posts     Post[]
 }
 
