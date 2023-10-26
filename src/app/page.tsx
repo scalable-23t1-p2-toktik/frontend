@@ -3,7 +3,7 @@ import {Popover, PopoverTrigger, PopoverContent, Button, Input} from "@nextui-or
 import Header from '../components/Header'
 import PopOverButton from "@/components/PopOverButton";
 import Link from "next/link";
-import './globals.css';
+
 
 export default function Home() {
     return (
