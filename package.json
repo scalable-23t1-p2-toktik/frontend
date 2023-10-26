@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@prisma/client": "^5.5.0",
+        "@radix-ui/react-toast": "^1.1.5",
         "@types/bcrypt": "^5.0.1",
         "autoprefixer": "^10.4.16",
         "bcrypt": "^5.1.1",

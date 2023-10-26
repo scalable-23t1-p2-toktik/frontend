@@ -14,6 +14,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
     username: z.string().min(1, 'Username is required'),
@@ -24,6 +27,8 @@ const FormSchema = z.object({
 })
 
 const SignInForm = () => {
+    const router = useRouter()
+    const { toast } = useToast()
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -32,8 +37,25 @@ const SignInForm = () => {
         },
     })
 
-    const onSubmit = (values: z.infer<typeof FormSchema>) => {
-        console.log(values)
+    const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+        const signInData = await signIn('credentials', {
+            username: values.username,
+            password: values.password,
+            redirect: false,
+        })
+        console.log(signInData)
+
+        if (signInData?.error) {
+            toast({
+                className: 'bottom-5 right-10 flex fixed md:max-w-[420px]',
+                title: 'Error',
+                description: 'Wrong Username or Password',
+                variant: 'destructive',
+                duration: 1500,
+            })
+        } else {
+            router.push('/')
+        }
     }
 
     return (

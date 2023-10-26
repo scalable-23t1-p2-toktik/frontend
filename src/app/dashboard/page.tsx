@@ -7,5 +7,5 @@ export default async function Dashboard() {
     if (!session) {
         redirect('api/auth/signin')
     }
-    return <>Secret Page</>
+    return <>Hello</>
 }
