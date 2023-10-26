@@ -7,6 +7,10 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 export const authOptions: NextAuthOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
+    pages: {
+        signIn: '/sign-in',
+    },
     session: {
         strategy: 'jwt',
     },
@@ -58,7 +62,6 @@ export const authOptions: NextAuthOptions = {
                     id: user.id + ' ',
                     username: user.username,
                     email: user.email,
-                    randomKey: 'Hey cool',
                 }
             },
         }),
@@ -66,24 +69,24 @@ export const authOptions: NextAuthOptions = {
 
     callbacks: {
         session: ({ session, token }) => {
-            console.log('Session callback', { session, token })
+            // console.log('Session callback', { session, token })
             return {
                 ...session,
                 user: {
                     ...session.user,
                     id: token.id,
-                    randomKey: token.randomKey,
+                    username: token.username,
                 },
             }
         },
         jwt: ({ token, user }) => {
-            console.log('JWT callback', { token, user })
+            // console.log('JWT callback', { token, user })
             if (user) {
                 const u = user as unknown as any
                 return {
                     ...token,
                     id: u.id,
-                    randomKey: u.randomKey,
+                    username: u.username,
                 }
             }
             return token

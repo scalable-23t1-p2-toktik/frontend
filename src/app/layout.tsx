@@ -1,4 +1,7 @@
 import Providers from './providers'
+import '../styles/globals.css'
+import { Toaster } from '@/components/ui/toaster'
+
 
 export const metadata = {
     title: 'Next.js',
@@ -13,7 +16,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <Providers>{children}</Providers>
+                <main className="h-screen flex flex-col justify-center items-center">
+                    <Providers>{children}</Providers>
+                </main>
+                <Toaster />
             </body>
         </html>
     )
