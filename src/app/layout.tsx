@@ -1,6 +1,7 @@
 import Providers from './providers'
 import '../styles/globals.css'
 import { Toaster } from '@/components/ui/toaster'
+import Navbar from '@/components/NavBar'
 
 
 export const metadata = {
@@ -16,9 +17,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-
-                    <Providers>{children}</Providers>
-
+                <Providers>{children}</Providers>
                 <Toaster />
             </body>
         </html>
