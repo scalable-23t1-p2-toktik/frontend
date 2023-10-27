@@ -1,24 +1,23 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { hash } from 'bcrypt'
-// import { z } from 'zod'
+import { z } from 'zod'
 
 const prisma = new PrismaClient()
 
-// const userRegisterSchema = z.object({
-//     username: z.string().min(1, 'Username is required').max(100),
-//     email: z.string().min(1, 'Email is required').email('Invalid email'),
-//     password: z
-//         .string()
-//         .min(1, 'Password is required')
-//         .min(8, 'Password must have atleast 8 characters'),
-// })
+const userRegisterSchema = z.object({
+    username: z.string().min(1, 'Username is required').max(100),
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
+    password: z
+        .string()
+        .min(1, 'Password is required')
+        .min(8, 'Password must have atleast 8 characters'),
+})
 
 export async function POST(request: Request) {
     try {
         const body = await request.json()
-        const { email, username, password } = body
-        // const { email, username, password } = userRegisterSchema.parse(body)
+        const { email, username, password } = userRegisterSchema.parse(body)
 
         const existingUserByEmail = await prisma.user.findUnique({
             where: { email: email },
