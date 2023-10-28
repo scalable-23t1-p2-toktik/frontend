@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="bg-black flex flex-col min-h-screen">
+        <div className="relative bg-black flex flex-col min-h-screen">
             <RootNavBar />
             <RootTextContainer />
             <RootVideoContainer />
