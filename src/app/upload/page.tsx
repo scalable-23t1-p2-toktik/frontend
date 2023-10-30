@@ -3,7 +3,7 @@ import Upload from './upload'
 const page = () => {
     return (
         <div className="w-full">
-            <h1>Upload</h1>
+            <h1>Select video to upload</h1>
             <Upload />
         </div>
     )

@@ -13,14 +13,17 @@ const Navbar = async () => {
             <div className="container flex items-center justify-between">
                 <Link href="/">
                     <Image
-                        src="/images/tik-tok.png"
+                        src="/images/tik-tok.jpg"
                         alt="Logo"
-                        width={150}
+                        width={45}
                         height={45}
                         className="relative"
                     />
                 </Link>
                 <div>
+                    <Link href="/upload">
+                        <button>Upload</button>
+                    </Link>
                     {session?.user ? <LogoutButton /> : <LoginButton />}
                     {/* <LoginButton />
                     <LogoutButton /> */}
