@@ -1,6 +1,7 @@
 import { Providers } from './providers'
 import '../styles/globals.css'
 import { Toaster } from '@/components/ui/toaster'
+import Navbar from '@/components/NavBar'
 
 export const metadata = {
     title: 'Next.js',
@@ -16,6 +17,7 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <main className="h-screen flex flex-col justify-center items-center">
+                    <Navbar />
                     <Providers>{children}</Providers>
                 </main>
                 <Toaster />
