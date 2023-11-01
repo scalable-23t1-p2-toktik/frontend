@@ -34,7 +34,6 @@ function Upload() {
         if (!file) return null
 
         try {
-            // var extension = file.name.split('.')[1]
             const url = await getPresigned()
 
             await put(url, file)
