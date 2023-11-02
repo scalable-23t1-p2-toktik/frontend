@@ -39,7 +39,13 @@
         "tailwindcss": "^3.3.5",
         "tailwindcss-animate": "^1.0.7",
         "tailwindcss-animatecss": "^3.0.4",
-        "zod": "^3.22.4"
+        "zod": "^3.22.4",
+        "@nextui-org/react": "^2.1.13",
+        "@tailwindcss/typography": "^0.5.10",
+        "framer-motion": "^10.16.4",
+        "next-auth": "^4.24.3",
+        "react-dropzone": "^14.2.3",
+        "react-modal": "^3.16.1"
     },
     "devDependencies": {
         "@types/node": "20.8.8",
@@ -51,6 +57,8 @@
         "tailwindcss": "^3.3.3",
         "ts-node": "^10.9.1",
         "typescript": "5.2.2",
-        "video.js": "^8.6.1"
+        "video.js": "^8.6.1",
+        "autoprefixer": "^10.4.16",
+        "postcss": "^8.4.31"
     }
 }
