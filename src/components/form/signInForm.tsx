@@ -55,6 +55,7 @@ const SignInForm = () => {
             })
         } else {
             router.push('/')
+            router.refresh()
         }
     }
 

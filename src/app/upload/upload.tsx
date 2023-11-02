@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 
 async function getPresigned() {
     const res = await fetch(`http://localhost:8080/presigned`)
@@ -26,22 +28,45 @@ async function put(url: any, data: any) {
     console.log('Data uploaded successfully.')
 }
 
+async function notify(username: any, videoName: any, uuid: any) {
+    const res = await fetch(
+        `http://localhost:8080/notify/${username}/${videoName}/${uuid}`
+    )
+}
+
 function Upload() {
     const [file, setFile] = useState<File>()
+    const session = useSession()
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (!file) return null
 
         try {
-            const url = await getPresigned()
+            const username = session.data?.user.username
+            // const url = await getPresigned(username, file.name)
+            const ticket = await getPresigned()
+
+            const url = ticket['uploadUrl']
+            const uuid = ticket['uuid']
+
+            console.log(url)
+            console.log(uuid)
 
             await put(url, file)
+
+            await notify(username, file.name, uuid)
             console.log('File uploaded successfully')
         } catch (e: any) {
             console.log(e)
         }
     }
+
+    useEffect(() => {
+        if (!session || !session.data?.user.email) {
+            redirect('/api/auth/signin')
+        }
+    }, [session])
 
     return (
         <form onSubmit={onSubmit}>
