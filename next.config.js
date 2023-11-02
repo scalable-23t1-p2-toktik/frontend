@@ -5,4 +5,8 @@ const nextConfig = {
     },
 }
 
-module.exports = nextConfig
+module.exports = {
+    images: {
+        domains: ['toktik-bucket.s3.ap-southeast-2.amazonaws.com'],
+    },
+}

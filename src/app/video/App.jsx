@@ -6,14 +6,12 @@ import { useEffect, useState } from 'react'
 // This imports the functional component from the previous sample.
 import VideoJS from './VideoJs'
 
-const App = () => {
+const App = ({ uuid }) => {
     const [url, setUrl] = useState('')
 
     useEffect(() => {
         const fetchUrl = async () => {
-            const response = await fetch(
-                'http://localhost:8080/stream/playlist'
-            )
+            const response = await fetch('http://localhost:8080/stream/' + uuid)
             const url = await response.text()
             setUrl(url)
         }
