@@ -21,8 +21,8 @@ const Navbar = async () => {
                     />
                 </Link>
                 <div>
-                    <Link href="/upload" style={{ paddingRight: '50px' }}>
-                        <button>Upload</button>
+                    <Link href="/upload" style={{ paddingRight: '20px' }}>
+                        <button className={buttonVariants()}>Upload</button>
                     </Link>
                     {session?.user ? <LogoutButton /> : <LoginButton />}
                     {/* <LoginButton />

@@ -1,12 +1,19 @@
+'use client'
+
 import Stream from './video'
 import App from './App'
+import { useEffect } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
+    const searchParams = useSearchParams()
+    const search = searchParams.get('uuid') || ''
+
     return (
         <div className="w-full">
-            <App />
+            <App uuid={search} />
         </div>
     )
 }
 
-export default page
+export default Page
