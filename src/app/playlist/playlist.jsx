@@ -6,7 +6,7 @@ import { set } from 'react-hook-form'
 import Image from 'next/image'
 
 async function getVideos() {
-    const res = await fetch(`http://localhost:8080/playlist`)
+    const res = await fetch(`http://localhost/backend/playlist`)
 
     const videos = await res.json()
 
@@ -14,7 +14,7 @@ async function getVideos() {
 }
 
 async function getThumbnail() {
-    const thumbnail = await fetch(`http://localhost:8080/thumbnail/` + uuidName)
+    const thumbnail = await fetch(`http://localhost/backend/thumbnail/` + uuidName)
 
     return thumbnail
 }
@@ -24,7 +24,7 @@ export const Playlist = () => {
 
     React.useEffect(() => {
         getVideos = async () => {
-            const res = await fetch(`http://localhost:8080/playlist`)
+            const res = await fetch(`http://localhost/backend/playlist`)
 
             const videos = await res.json()
 
@@ -60,7 +60,7 @@ const VideoItem = ({ name, uuidName }) => {
     React.useEffect(() => {
         getThumbnail = async () => {
             const fetchedThumbnail = await fetch(
-                `http://localhost:8080/thumbnail/` + uuidName
+                `http://localhost/backend/thumbnail/` + uuidName
             )
             const thumbnailUrl = await fetchedThumbnail.text()
             setThumbnail(thumbnailUrl)

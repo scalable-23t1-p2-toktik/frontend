@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 
 async function getPresigned() {
-    const res = await fetch(`http://localhost:8080/presigned`)
+    const res = await fetch(`http://localhost/backend/presigned`)
 
     if (!res.ok) {
         throw new Error('Failed to get presigned url')
@@ -30,7 +30,7 @@ async function put(url: any, data: any) {
 
 async function notify(username: any, videoName: any, uuid: any) {
     const res = await fetch(
-        `http://localhost:8080/notify/${username}/${videoName}/${uuid}`
+        `http://localhost/backend/notify/${username}/${videoName}/${uuid}`
     )
 }
 

@@ -11,7 +11,7 @@ const App = ({ uuid }) => {
 
     useEffect(() => {
         const fetchUrl = async () => {
-            const response = await fetch('http://localhost:8080/stream/' + uuid)
+            const response = await fetch('http://localhost/backend/stream/' + uuid)
             const url = await response.text()
             setUrl(url)
         }

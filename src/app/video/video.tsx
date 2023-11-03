@@ -23,7 +23,7 @@ function Stream() {
 
     useEffect(() => {
         const fetchUrl = async () => {
-            const response = await fetch('http://localhost:8080/modify/output')
+            const response = await fetch('http://localhost/backend/modify/output')
             const url = await response.text()
             setUrl(url)
         }
