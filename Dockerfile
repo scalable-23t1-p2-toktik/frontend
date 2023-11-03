@@ -3,6 +3,6 @@ FROM node:18
 COPY package*.json .
 RUN npm install
 COPY . .
+EXPOSE 3000
 RUN npm run build
-COPY ./.next .
-RUN npm run start
+CMD npm run start
