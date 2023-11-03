@@ -29,6 +29,7 @@ export async function POST(request: Request) {
             )
         }
 
+    
         const existingUserByUsername = await prisma.user.findUnique({
             where: { username: username },
         })
@@ -55,6 +56,7 @@ export async function POST(request: Request) {
             { status: 201 }
         )
     } catch (error) {
+        console.log(error)
         return NextResponse.json(
             {
                 message: 'Oops, Something went wrong!',
