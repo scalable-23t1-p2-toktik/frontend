@@ -5,4 +5,4 @@ RUN npm install
 COPY . .
 RUN npm run build
 COPY ./.next .
-CMD npm run start
+RUN npm run start
