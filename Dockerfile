@@ -1,8 +1,15 @@
 FROM node:18
-
-COPY package*.json .
+WORKDIR /app
+COPY package*.json ./
+COPY prisma ./prisma/
 RUN npm install
-COPY . .
-EXPOSE 3000
+COPY . ./
+
 RUN npm run build
-CMD npm run start
+
+EXPOSE 3000
+
+CMD ["sh", "-c", "npm run prisma-generate && npm run start:prod"]
+# RUN npm run prisma-generate
+# RUN npm run migrate-resolve
+# RUN npm run dev
