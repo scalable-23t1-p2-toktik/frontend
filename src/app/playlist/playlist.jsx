@@ -4,35 +4,44 @@ import { get } from 'http'
 import React from 'react'
 import { set } from 'react-hook-form'
 import Image from 'next/image'
+import getVideos from './components/get-videos'
+import getThumbnail from './components/get-thumbnail'
+import getVideosAndSet from './components/get-videos-and-set'
+import getThumbnailAndSet from './components/get-thumbnail-and-set'
 
-async function getVideos() {
-    const res = await fetch(`http://localhost/backend/playlist`)
+// // Can be rendered in server side
+// async function getVideos() {
+//     const res = await fetch(`http://localhost/backend/playlist`)
 
-    const videos = await res.json()
+//     const videos = await res.json()
 
-    return videos
-}
+//     return videos
+// }
 
-async function getThumbnail() {
-    const thumbnail = await fetch(`http://localhost/backend/thumbnail/` + uuidName)
+// // Can be rendered in server side
+// async function getThumbnail() {
+//     const thumbnail = await fetch(`http://localhost/backend/thumbnail/` + uuidName)
 
-    return thumbnail
-}
+//     return thumbnail
+// }
+
 
 export const Playlist = () => {
     const [videos, setVideos] = React.useState([])
 
     React.useEffect(() => {
-        getVideos = async () => {
-            const res = await fetch(`http://localhost/backend/playlist`)
+        // // Can be rendered on sever side
+        // getVideos = async () => {
+        //     const res = await fetch(`http://localhost/backend/playlist`)
 
-            const videos = await res.json()
+        //     const videos = await res.json()
 
-            console.log(videos)
+        //     console.log(videos)
 
-            setVideos(videos)
-        }
-        getVideos()
+        //     setVideos(videos)
+        // }
+        // getVideos()
+        getVideosAndSet(setVideos)
     }, [])
 
     return (
@@ -58,14 +67,16 @@ const VideoItem = ({ name, uuidName }) => {
     const [thumbnail, setThumbnail] = React.useState('')
 
     React.useEffect(() => {
-        getThumbnail = async () => {
-            const fetchedThumbnail = await fetch(
-                `http://localhost/backend/thumbnail/` + uuidName
-            )
-            const thumbnailUrl = await fetchedThumbnail.text()
-            setThumbnail(thumbnailUrl)
-        }
-        getThumbnail()
+        // // Can be rendered on server side
+        // getThumbnail = async () => {
+        //     const fetchedThumbnail = await fetch(
+        //         `http://localhost/backend/thumbnail/` + uuidName
+        //     )
+        //     const thumbnailUrl = await fetchedThumbnail.text()
+        //     setThumbnail(thumbnailUrl)
+        // }
+        // getThumbnail()
+        getThumbnailAndSet(uuidName, setThumbnail)
     }, [])
     return (
         <div style={{ padding: '10px 0px' }}>

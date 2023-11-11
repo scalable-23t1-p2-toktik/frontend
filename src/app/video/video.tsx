@@ -3,6 +3,7 @@
 import { Container, Video } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import * as React from 'react'
+import fetchUrl from './components/fetch-url-modify-output'
 
 // async function getPresigned(key: string) {
 //     const res = await fetch(`http://localhost:8080/modify/${key}`)
@@ -22,12 +23,14 @@ function Stream() {
     useEffect(() => setIsClient(true), [])
 
     useEffect(() => {
-        const fetchUrl = async () => {
-            const response = await fetch('http://localhost/backend/modify/output')
-            const url = await response.text()
-            setUrl(url)
-        }
-        fetchUrl()
+        // // Can be rendered in server side
+        // const fetchUrl = async () => {
+        //     const response = await fetch('http://localhost/backend/modify/output')
+        //     const url = await response.text()
+        //     setUrl(url)
+        // }
+        // fetchUrl()
+        fetchUrl(setUrl)
     }, [url])
 
     // useEffect(() => {
