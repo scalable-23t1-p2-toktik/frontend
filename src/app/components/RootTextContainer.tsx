@@ -11,7 +11,7 @@ export default function RootTextContainer() {
                 TOKTIK
             </div>
             <div className="text-white text-center w-full h-1/4 content-center" style={{ fontSize: '1vw' }}>
-                The "#1" best short video streaming/collecting service
+                The &quot;#1&quot; best short video streaming/collecting service
             </div>
         </div>
     );
