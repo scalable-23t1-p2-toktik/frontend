@@ -1,7 +1,10 @@
+const {nextui} = require("@nextui-org/react");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
@@ -9,13 +12,16 @@ module.exports = {
 	],
   theme: {
     container: {
-      center: true,
+      center: false,
       padding: "2rem",
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      fontSize: {
+        '9xl': '9em', // Define a custom text size
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -72,5 +78,24 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography'), nextui(
+      {
+        prefix: "nextui", // prefix for themes variables
+        addCommonColors: false, // override common colors (e.g. "blue", "green", "pink").
+        defaultTheme: "light", // default theme from the themes object
+        defaultExtendTheme: "light", // default theme to extend on custom themes
+        layout: {}, // common layout tokens (applied to all themes)
+        themes: {
+          light: {
+            layout: {}, // light theme layout tokens
+            colors: {}, // light theme colors
+          },
+          dark: {
+            layout: {}, // dark theme layout tokens
+            colors: {}, // dark theme colors
+          },
+          // ... custom themes
+        },
+      }
+  )],
+};
