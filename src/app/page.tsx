@@ -5,9 +5,9 @@ import { LoginButton, LogoutButton } from './auth'
 import App from './video/App'
 import Playlist from './playlist/playlist'
 
-export default async function Home() {
-    const session = await getServerSession(authOptions)
 
+
+export default function Home() {
     return (
         <div
             className="video"
