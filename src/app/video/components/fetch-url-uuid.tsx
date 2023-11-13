@@ -4,7 +4,8 @@ import React from 'react'
 export default async function fetchUrl (uuid: string ,setUrl: React.Dispatch<React.SetStateAction<string>>) {
     const backendHostname = process.env.BACKEND_HOSTNAME;
 
-    const backendUrl = "http://" + backendHostname + "/backend/stream/" + uuid
+    // const backendUrl = "http://" + backendHostname + "/backend/stream/" + uuid
+    const backendUrl = "/backend/stream/" + uuid
 
     const response = await fetch(backendUrl)
     const url = await response.text()
