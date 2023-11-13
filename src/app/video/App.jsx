@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useEffect, useState } from 'react'
-import fetchUrl from './components/fetch-url-uuid'
+// import fetchUrl from './components/fetch-url-uuid'
 
 // This imports the functional component from the previous sample.
 import VideoJS from './VideoJs'
@@ -11,15 +11,15 @@ const App = ({ uuid }) => {
     const [url, setUrl] = useState('')
 
     useEffect(() => {
-        // // Can be rendered in server side
-        // const fetchUrl = async () => {
-        //     const response = await fetch('http://localhost/backend/stream/' + uuid)
-        //     const url = await response.text()
-        //     setUrl(url)
-        // }
-        // fetchUrl()
+        const fetchUrl = async () => {
+            // const response = await fetch('http://localhost/backend/stream/' + uuid)
+            const response = await fetch('/backend/stream/' + uuid)
+            const url = await response.text()
+            setUrl(url)
+        }
+        fetchUrl()
 
-        fetchUrl(uuid, setUrl)
+        // fetchUrl(uuid, setUrl)
     }, [])
 
     const playerRef = React.useRef(null)

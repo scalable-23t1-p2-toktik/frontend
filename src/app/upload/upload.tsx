@@ -3,20 +3,21 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
-import getPresigned from './components/get-presigned'
-import notify from './components/notify'
+// import getPresigned from './components/get-presigned'
+// import notify from './components/notify'
 
-// // Can we rendered in server side
-// async function getPresigned() {
-//     const res = await fetch(`http://localhost/backend/presigned`)
 
-//     if (!res.ok) {
-//         throw new Error('Failed to get presigned url')
-//     }
-//     const data = await res.json()
+async function getPresigned() {
+    // const res = await fetch(`http://localhost/backend/presigned`)
+    const res = await fetch(`/backend/presigned`)
 
-//     return data
-// }
+    if (!res.ok) {
+        throw new Error('Failed to get presigned url')
+    }
+    const data = await res.json()
+
+    return data
+}
 
 async function put(url: any, data: any) {
     const res = await fetch(url, {
@@ -31,12 +32,14 @@ async function put(url: any, data: any) {
     console.log('Data uploaded successfully.')
 }
 
-// // Can we rendered in server side
-// async function notify(username: any, videoName: any, uuid: any) {
-//     const res = await fetch(
-//         `http://localhost/backend/notify/${username}/${videoName}/${uuid}`
-//     )
-// }
+async function notify(username: any, videoName: any, uuid: any) {
+    // const res = await fetch(
+    //     `http://localhost/backend/notify/${username}/${videoName}/${uuid}`
+    // )
+    const res = await fetch(
+        `/backend/notify/${username}/${videoName}/${uuid}`
+    )
+}
 
 function Upload() {
     const [file, setFile] = useState<File>()
