@@ -10,8 +10,8 @@ RUN npm run build --verbose
 EXPOSE 3000
 
 # Hardcoding migration query, not good
-# CMD ["sh", "-c", "npm run prisma-generate && npx prisma migrate resolve --applied 20231025115659_users_db && npm run start:prod"]
-CMD ["sh", "-c", "npm run prisma-generate && npx prisma migrate dev && npm start"]
+CMD ["sh", "-c", "npm run prisma-generate && npx prisma migrate resolve --applied 20231025115659_users_db && npm run start:prod"]
+# CMD ["sh", "-c", "npm run prisma-generate && npx prisma migrate dev && npm start "]
 # RUN npm run prisma-generate
 # RUN npm run migrate-resolve
 # RUN npm run dev
