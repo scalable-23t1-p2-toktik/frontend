@@ -4,6 +4,7 @@ import { get } from 'http'
 import React from 'react'
 import { set } from 'react-hook-form'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
 async function getVideos() {
     const res = await fetch(`http://localhost:8080/playlist`)
@@ -21,6 +22,7 @@ async function getThumbnail() {
 
 export const Playlist = () => {
     const [videos, setVideos] = React.useState([])
+    const session = useSession()
 
     React.useEffect(() => {
         getVideos = async () => {
@@ -33,6 +35,12 @@ export const Playlist = () => {
             setVideos(videos)
         }
         getVideos()
+
+        const updateInterval = setInterval(getVideos, 5000)
+
+        return () => {
+            clearInterval(updateInterval)
+        }
     }, [])
 
     return (
@@ -41,11 +49,32 @@ export const Playlist = () => {
                 <div className="container" key={video}>
                     <div className="row">
                         <div className="container">
+                            <p>{video['name']}</p>
                             <a href={`video?uuid=${video['uuidName']}`}>
                                 <VideoItem
                                     uuidName={video['uuidName']}
                                 ></VideoItem>
                             </a>
+                            {/* <p>Likes: {video['likes'].length}</p> */}
+                            <h2>
+                                <button
+                                    onClick={() => likeVideo(video.uuidName)}
+                                >
+                                    Like
+                                </button>{' '}
+                                {video['likes'].length} Views: {video['views']}
+                            </h2>
+                            <div>
+                                <h3>Comments: </h3>
+                                {video.comments.map((comment, index) => (
+                                    <div key={index}>
+                                        <p>
+                                            [{comment.dateTime}]
+                                            {comment.username}: {comment.text}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,6 +96,7 @@ const VideoItem = ({ name, uuidName }) => {
         }
         getThumbnail()
     }, [])
+
     return (
         <div style={{ padding: '10px 0px' }}>
             <Image

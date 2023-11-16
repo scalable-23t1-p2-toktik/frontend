@@ -4,6 +4,7 @@ import { User } from './user'
 import { LoginButton, LogoutButton } from './auth'
 import App from './video/App'
 import Playlist from './playlist/playlist'
+import SocketComponent from '@/components/SocketComponent'
 
 export default async function Home() {
     const session = await getServerSession(authOptions)
@@ -20,6 +21,7 @@ export default async function Home() {
             }}
         >
             <Playlist />
+            <SocketComponent />
         </div>
     )
 }

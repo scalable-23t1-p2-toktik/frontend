@@ -7,17 +7,6 @@ import { useEffect, useState } from 'react'
 import VideoJS from './VideoJs'
 
 const App = ({ uuid }) => {
-    const [url, setUrl] = useState('')
-
-    useEffect(() => {
-        const fetchUrl = async () => {
-            const response = await fetch('http://localhost:8080/stream/' + uuid)
-            const url = await response.text()
-            setUrl(url)
-        }
-        fetchUrl()
-    }, [])
-
     const playerRef = React.useRef(null)
 
     const videoJsOptions = {
@@ -35,7 +24,7 @@ const App = ({ uuid }) => {
         fluid: false,
         sources: [
             {
-                src: url,
+                src: 'http://localhost:8080/stream/' + uuid,
                 type: 'application/x-mpegURL',
             },
         ],
