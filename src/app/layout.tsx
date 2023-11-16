@@ -17,7 +17,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <Providers>{children}</Providers>
+                <main className="h-screen flex flex-col justify-center items-center">
+                    <Navbar />
+                    <Providers>{children}</Providers>
+                </main>
                 <Toaster />
             </body>
         </html>

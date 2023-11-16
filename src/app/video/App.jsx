@@ -8,19 +8,19 @@ import { useEffect, useState } from 'react'
 import VideoJS from './VideoJs'
 
 const App = ({ uuid }) => {
-    const [url, setUrl] = useState('')
+    // const [url, setUrl] = useState('')
 
-    useEffect(() => {
-        const fetchUrl = async () => {
-            // const response = await fetch('http://localhost/backend/stream/' + uuid)
-            const response = await fetch('/backend/stream/' + uuid)
-            const url = await response.text()
-            setUrl(url)
-        }
-        fetchUrl()
+    // useEffect(() => {
+    //     const fetchUrl = async () => {
+    //         // const response = await fetch('http://localhost/backend/stream/' + uuid)
+    //         const response = await fetch('/backend/stream/' + uuid)
+    //         const url = await response.text()
+    //         setUrl(url)
+    //     }
+    //     fetchUrl()
 
-        // fetchUrl(uuid, setUrl)
-    }, [])
+    //     // fetchUrl(uuid, setUrl)
+    // }, [])
 
     const playerRef = React.useRef(null)
 
@@ -39,7 +39,7 @@ const App = ({ uuid }) => {
         fluid: false,
         sources: [
             {
-                src: url,
+                src: '/backend/stream/' + uuid,
                 type: 'application/x-mpegURL',
             },
         ],
