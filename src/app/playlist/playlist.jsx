@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 
 async function getVideos() {
-    const res = await fetch(`http://localhost:8080/playlist`)
+    const res = await fetch(`http://localhost:8080/backend/playlist`)
 
     const videos = await res.json()
 
@@ -15,7 +15,9 @@ async function getVideos() {
 }
 
 async function getThumbnail() {
-    const thumbnail = await fetch(`http://localhost:8080/thumbnail/` + uuidName)
+    const thumbnail = await fetch(
+        `http://localhost:8080/backend/thumbnail/` + uuidName
+    )
 
     return thumbnail
 }
@@ -26,7 +28,7 @@ export const Playlist = () => {
 
     React.useEffect(() => {
         getVideos = async () => {
-            const res = await fetch(`http://localhost:8080/playlist`)
+            const res = await fetch(`http://localhost:8080/backend/playlist`)
 
             const videos = await res.json()
 
@@ -36,7 +38,7 @@ export const Playlist = () => {
         }
         getVideos()
 
-        const updateInterval = setInterval(getVideos, 5000)
+        const updateInterval = setInterval(getVideos, 10000)
 
         return () => {
             clearInterval(updateInterval)
@@ -89,7 +91,7 @@ const VideoItem = ({ name, uuidName }) => {
     React.useEffect(() => {
         getThumbnail = async () => {
             const fetchedThumbnail = await fetch(
-                `http://localhost:8080/thumbnail/` + uuidName
+                `http://localhost:8080/backend/thumbnail/` + uuidName
             )
             const thumbnailUrl = await fetchedThumbnail.text()
             setThumbnail(thumbnailUrl)

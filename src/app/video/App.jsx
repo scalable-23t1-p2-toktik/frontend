@@ -24,7 +24,7 @@ const App = ({ uuid }) => {
         fluid: false,
         sources: [
             {
-                src: 'http://localhost:8080/stream/' + uuid,
+                src: 'http://localhost:8080/backend/stream/' + uuid,
                 type: 'application/x-mpegURL',
             },
         ],

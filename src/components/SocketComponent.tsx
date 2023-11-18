@@ -1,27 +1,135 @@
 'use client'
 
-import io from 'socket.io-client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { io, Socket } from 'socket.io-client'
+import { IoIosNotifications } from 'react-icons/io'
+import Link from 'next/link'
 
 const SocketComponent = () => {
+    const { data: session, status } = useSession()
+    const [socket, setSocket] = useState<Socket | null>(null)
+    const [notifications, setNotifications] = useState<any[]>([])
+    const [showNotifications, setShowNotifications] = useState(false)
+
     useEffect(() => {
-        const socket = io('http://localhost:5000') // TODO: Change this later
-
-        socket.on('connect', () => {
-            console.log('Connected to Socket server')
-
-            socket.emit('get name', 'pong')
-        })
+        const newSocket = io('http://localhost:5000')
+        setSocket(newSocket)
+        console.log(newSocket)
 
         return () => {
-            socket.disconnect()
+            // Clean up the socket connection when the component is unmounted
+            newSocket.disconnect()
         }
     }, [])
 
-    return null
+    const user = session?.user?.username || null
+
+    useEffect(() => {
+        socket?.emit('newUser', user)
+    }, [socket, user])
+
+    useEffect(() => {
+        const handleNotification = (message: any) => {
+            console.log(message)
+            setNotifications((prevNotifications) => [
+                ...prevNotifications,
+                message,
+            ])
+        }
+        socket?.on('notification', handleNotification)
+    }, [socket])
+
+    console.log(notifications)
+
+    const toggleNotifications = async () => {
+        setShowNotifications(!showNotifications)
+        for (let i = 0; i < notifications.length; i++) {
+            const notification = notifications[i]
+            const res = await fetch(
+                `http://localhost:8080/readNotification/` + notification['id'],
+                {
+                    method: 'PUT',
+                }
+            )
+        }
+    }
+
+    const handleRead = () => {
+        setNotifications([])
+    }
+
+    return (
+        <div className="flex items-center justify-between">
+            <button style={{ paddingRight: '20px' }}>
+                <span role="img" aria-label="bell">
+                    <IoIosNotifications
+                        style={{ fontSize: '3em' }}
+                        onClick={toggleNotifications}
+                    />
+                    {notifications.length > 0 && (
+                        <div
+                            style={{
+                                width: '18px',
+                                height: '18px',
+                                backgroundColor: 'red',
+                                borderRadius: '50%',
+                                padding: '5px',
+                                fontSize: '14px',
+                                color: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                position: 'absolute',
+                                top: '14px',
+                                right: '315px',
+                            }}
+                        >
+                            {notifications.length}
+                        </div>
+                    )}
+                </span>
+            </button>
+            {showNotifications && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '60px',
+                        right: '150px',
+                        border: '1px solid black',
+                        padding: '10px',
+                        backgroundColor: 'lightgray',
+                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                        zIndex: '1000',
+                        maxHeight: '200px',
+                        overflowY: 'auto',
+                    }}
+                >
+                    {notifications.map((notification, index) => (
+                        <div key={index}>{notification['text']}</div>
+                    ))}
+                    <div style={{ marginTop: '10px' }}>
+                        <Link
+                            style={{ border: 'solid black' }}
+                            href="/notification"
+                        >
+                            View All Notifications
+                        </Link>
+                        <div style={{ paddingBottom: '10xp' }}>
+                            <button
+                                style={{
+                                    border: 'solid black',
+                                }}
+                                onClick={handleRead}
+                            >
+                                Mark as read
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default SocketComponent

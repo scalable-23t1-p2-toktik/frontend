@@ -21,7 +21,6 @@ export default async function Home() {
             }}
         >
             <Playlist />
-            <SocketComponent />
         </div>
     )
 }
