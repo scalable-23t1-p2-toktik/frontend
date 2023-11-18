@@ -1,7 +1,8 @@
-import { Providers } from './providers'
+import Providers from './providers'
 import '../styles/globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import Navbar from '@/components/NavBar'
+
 
 export const metadata = {
     title: 'Next.js',

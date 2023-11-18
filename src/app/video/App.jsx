@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useEffect, useState } from 'react'
+// import fetchUrl from './components/fetch-url-uuid'
 
 // This imports the functional component from the previous sample.
 import VideoJS from './VideoJs'
@@ -24,7 +25,7 @@ const App = ({ uuid }) => {
         fluid: false,
         sources: [
             {
-                src: 'http://localhost:8080/backend/stream/' + uuid,
+                src: '/backend/stream/' + uuid,
                 type: 'application/x-mpegURL',
             },
         ],

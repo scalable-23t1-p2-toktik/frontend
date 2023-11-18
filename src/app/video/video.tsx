@@ -3,17 +3,19 @@
 import { Container, Video } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import * as React from 'react'
+// import fetchUrl from './components/fetch-url-modify-output'
 
-// async function getPresigned(key: string) {
-//     const res = await fetch(`http://localhost:8080/modify/${key}`)
+async function getPresigned(key: string) {
+    // const res = await fetch(`http://localhost:8080/modify/${key}`)
+    const res = await fetch(`backend/modify/${key}`)
 
-//     if (!res.ok) {
-//         throw new Error('Failed to get presigned url')
-//     }
-//     const data = await res.json()
+    if (!res.ok) {
+        throw new Error('Failed to get presigned url')
+    }
+    const data = await res.json()
 
-//     return data
-// }
+    return data
+}
 
 function Stream() {
     const [url, setUrl] = useState('')
@@ -23,11 +25,13 @@ function Stream() {
 
     useEffect(() => {
         const fetchUrl = async () => {
-            const response = await fetch('http://localhost:8080/modify/output')
+            // const response = await fetch('http://localhost/backend/modify/output')
+            const response = await fetch('/backend/modify/output')
             const url = await response.text()
             setUrl(url)
         }
         fetchUrl()
+        // fetchUrl(setUrl)
     }, [url])
 
     // useEffect(() => {
