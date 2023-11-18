@@ -15,7 +15,7 @@ export const Notification = () => {
             const username = session?.user?.username || null
 
             const res = await fetch(
-                `http://localhost:8080/notification/` + username
+                `/backend/notification/` + username
             )
 
             const notification = await res.json()

@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { io, Socket } from 'socket.io-client'
 import { IoIosNotifications } from 'react-icons/io'
-import Link from 'next/link'
+import dotenv from 'dotenv'
+import { Link } from "@nextui-org/react";
+
+dotenv.config()
 
 const SocketComponent = () => {
     const { data: session, status } = useSession()
@@ -12,8 +15,11 @@ const SocketComponent = () => {
     const [notifications, setNotifications] = useState<any[]>([])
     const [showNotifications, setShowNotifications] = useState(false)
 
+    const socketHostname = process.env.SOCKET_IO_HOSTNAME || 'localhost';
+
     useEffect(() => {
-        const newSocket = io('http://localhost:5000')
+    
+        const newSocket = io(socketHostname)
         setSocket(newSocket)
         console.log(newSocket)
 
@@ -47,7 +53,7 @@ const SocketComponent = () => {
         for (let i = 0; i < notifications.length; i++) {
             const notification = notifications[i]
             const res = await fetch(
-                `http://localhost:8080/readNotification/` + notification['id'],
+                `/backend/readNotification/` + notification['id'],
                 {
                     method: 'PUT',
                 }
