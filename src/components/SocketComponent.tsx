@@ -10,7 +10,7 @@ import { Link } from "@nextui-org/react";
 dotenv.config()
 
 const SocketComponent = () => {
-    const { data: session, status } = useSession()
+    const session = useSession()
     const [socket, setSocket] = useState<Socket | null>(null)
     const [notifications, setNotifications] = useState<any[]>([])
     const [showNotifications, setShowNotifications] = useState(false)
@@ -29,7 +29,7 @@ const SocketComponent = () => {
         }
     }, [])
 
-    const user = session?.user?.username || null
+    const user = session?.data?.user?.username || null
 
     useEffect(() => {
         socket?.emit('newUser', user)

@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react'
 
 export const Notification = () => {
     const [notifications, setNotifications] = React.useState([])
-    const { data: session, status } = useSession()
+    const [session, status] = useSession()
 
     React.useEffect(() => {
         const getNotifications = async () => {
