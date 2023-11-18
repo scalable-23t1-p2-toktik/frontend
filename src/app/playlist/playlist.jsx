@@ -4,8 +4,7 @@ import { get } from 'http'
 import React from 'react'
 import { set } from 'react-hook-form'
 import Image from 'next/image'
-// import getVideos from './components/get-videos'
-// import getThumbnail from './components/get-thumbnail'
+import { useSession } from 'next-auth/react'
 import getVideosAndSet from './components/get-videos-and-set'
 import getThumbnailAndSet from './components/get-thumbnail-and-set'
 
@@ -30,6 +29,7 @@ async function getThumbnail() {
 
 export const Playlist = () => {
     const [videos, setVideos] = React.useState([])
+    const session = useSession()
 
     React.useEffect(() => {
         getVideos = async () => {
@@ -43,7 +43,14 @@ export const Playlist = () => {
             setVideos(videos)
         }
         getVideos()
-        // getVideosAndSet(setVideos)
+
+
+        const updateInterval = setInterval(getVideos, 5000)
+
+        return () => {
+            clearInterval(updateInterval)
+        }
+        
     }, [])
 
     return (
@@ -52,11 +59,32 @@ export const Playlist = () => {
                 <div className="container" key={video}>
                     <div className="row">
                         <div className="container">
+                            <p>{video['name']}</p>
                             <a href={`video?uuid=${video['uuidName']}`}>
                                 <VideoItem
                                     uuidName={video['uuidName']}
                                 ></VideoItem>
                             </a>
+                            {/* <p>Likes: {video['likes'].length}</p> */}
+                            <h2>
+                                <button
+                                    onClick={() => likeVideo(video.uuidName)}
+                                >
+                                    Like
+                                </button>{' '}
+                                {video['likes'].length} Views: {video['views']}
+                            </h2>
+                            <div>
+                                <h3>Comments: </h3>
+                                {video.comments.map((comment, index) => (
+                                    <div key={index}>
+                                        <p>
+                                            [{comment.dateTime}]
+                                            {comment.username}: {comment.text}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,6 +111,7 @@ const VideoItem = ({ name, uuidName }) => {
         getThumbnail()
         // getThumbnailAndSet(uuidName, setThumbnail)
     }, [])
+
     return (
         <div style={{ padding: '10px 0px' }}>
             <Image
