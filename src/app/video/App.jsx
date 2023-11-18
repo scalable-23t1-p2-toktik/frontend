@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 import VideoJS from './VideoJs'
 
 const App = ({ uuid }) => {
-
     const playerRef = React.useRef(null)
 
     const videoJsOptions = {

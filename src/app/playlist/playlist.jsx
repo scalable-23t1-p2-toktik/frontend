@@ -8,7 +8,6 @@ import { useSession } from 'next-auth/react'
 import getVideosAndSet from './components/get-videos-and-set'
 import getThumbnailAndSet from './components/get-thumbnail-and-set'
 
-
 async function getVideos() {
     // const res = await fetch(`http://localhost/backend/playlist`)
     const res = await fetch(`/backend/playlist`)
@@ -18,14 +17,12 @@ async function getVideos() {
     return videos
 }
 
-
 async function getThumbnail() {
     // const thumbnail = await fetch(`http://localhost/backend/thumbnail/` + uuidName)
     const thumbnail = await fetch(`/backend/thumbnail/` + uuidName)
 
     return thumbnail
 }
-
 
 export const Playlist = () => {
     const [videos, setVideos] = React.useState([])
@@ -44,13 +41,11 @@ export const Playlist = () => {
         }
         getVideos()
 
-
         const updateInterval = setInterval(getVideos, 5000)
 
         return () => {
             clearInterval(updateInterval)
         }
-        
     }, [])
 
     return (
@@ -97,7 +92,6 @@ const VideoItem = ({ name, uuidName }) => {
     const [thumbnail, setThumbnail] = React.useState('')
 
     React.useEffect(() => {
-
         getThumbnail = async () => {
             // const fetchedThumbnail = await fetch(
             //     `http://localhost/backend/thumbnail/` + uuidName
