@@ -9,8 +9,8 @@ import getVideosAndSet from './components/get-videos-and-set'
 import getThumbnailAndSet from './components/get-thumbnail-and-set'
 
 async function getVideos() {
-    const res = await fetch(`http://localhost:8080/backend/playlist`)
-    // const res = await fetch(`/backend/playlist`)
+    // const res = await fetch(`http://localhost:8080/backend/playlist`)
+    const res = await fetch(`/backend/playlist`)
 
     const videos = await res.json()
 
@@ -18,10 +18,10 @@ async function getVideos() {
 }
 
 async function getThumbnail() {
-    const thumbnail = await fetch(
-        `http://localhost:8080/backend/thumbnail/` + uuidName
-    )
-    // const thumbnail = await fetch(`/backend/thumbnail/` + uuidName)
+    // const thumbnail = await fetch(
+    //     `http://localhost:8080/backend/thumbnail/` + uuidName
+    // )
+    const thumbnail = await fetch(`/backend/thumbnail/` + uuidName)
 
     return thumbnail
 }
@@ -32,8 +32,8 @@ export const Playlist = () => {
 
     React.useEffect(() => {
         getVideos = async () => {
-            const res = await fetch(`http://localhost:8080/backend/playlist`)
-            // const res = await fetch(`/backend/playlist`)
+            // const res = await fetch(`http://localhost:8080/backend/playlist`)
+            const res = await fetch(`/backend/playlist`)
 
             const videos = await res.json()
 
@@ -104,12 +104,12 @@ const VideoItem = ({ name, uuidName }) => {
 
     React.useEffect(() => {
         getThumbnail = async () => {
-            const fetchedThumbnail = await fetch(
-                `http://localhost:8080/backend/thumbnail/` + uuidName
-            )
             // const fetchedThumbnail = await fetch(
-            //     `/backend/thumbnail/` + uuidName
+            //     `http://localhost:8080/backend/thumbnail/` + uuidName
             // )
+            const fetchedThumbnail = await fetch(
+                `/backend/thumbnail/` + uuidName
+            )
             const thumbnailUrl = await fetchedThumbnail.text()
             setThumbnail(thumbnailUrl)
         }
