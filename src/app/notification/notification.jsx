@@ -8,14 +8,14 @@ import { useSession } from 'next-auth/react'
 
 export const Notification = () => {
     const [notifications, setNotifications] = React.useState([])
-    const { data: session, status } = useSession()
+    const [session, status] = useSession()
 
     React.useEffect(() => {
         const getNotifications = async () => {
             const username = session?.user?.username || null
 
             const res = await fetch(
-                `http://localhost:8080/notification/` + username
+                `/backend/notification/` + username
             )
 
             const notification = await res.json()

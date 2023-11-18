@@ -16,9 +16,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
+<<<<<<< HEAD
                 <main>
+=======
+                <main className="h-screen flex flex-col justify-center items-center">
+                <Navbar />
+>>>>>>> user-db
                     <Providers>
-                        <Navbar />
                         {children}
                     </Providers>
                 </main>
