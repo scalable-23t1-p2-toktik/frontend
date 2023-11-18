@@ -5,7 +5,6 @@ import { LoginButton, LogoutButton } from '@/app/auth'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import SocketComponent from './SocketComponent'
-import { Providers } from '@/app/providers'
 
 const Navbar = async () => {
     const session = await getServerSession(authOptions)
